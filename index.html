@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yash Chaurasiya | Portfolio & Tenant Portal</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #000000;
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --border-card: rgba(255, 255, 255, 0.12);
+      --accent-color: #0071e3;
+      --accent-hover: #0077ed;
+      --text-main: #f5f5f7;
+      --text-muted: #86868b;
+      --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-family);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-card);
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .logo span {
+      color: var(--accent-color);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .lang-select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-card);
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .lang-select option {
+      background: #111;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-links button:hover, .nav-links button.active {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .page-view {
+      display: none;
+      min-height: 100vh;
+      padding: 7rem 2rem 4rem;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    .container {
+      max-width: 1050px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: -0.5px;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      border: 1px solid var(--border-card);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-block {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    /* HOME PAGE DESIGN */
+    .hero-content {
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .apple-heading {
+      font-size: 3.8rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .apple-heading span {
+      background: linear-gradient(135deg, #fff 30%, #86868b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      margin: 1rem 0 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .about-card {
+      text-align: center;
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+
+    .about-text {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .secret-link {
+      color: #2997ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .secret-link:hover {
+      text-decoration: underline;
+    }
+
+    .skills-grid {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .skill-card {
+      text-align: center;
+    }
+
+    .circle-progress {
+      position: relative;
+      width: 130px;
+      height: 130px;
+    }
+
+    .circle-progress svg {
+      width: 130px;
+      height: 130px;
+      transform: rotate(-90deg);
+    }
+
+    .circle-progress circle {
+      fill: none;
+      stroke-width: 10;
+      stroke: rgba(255, 255, 255, 0.08);
+    }
+
+    .circle-progress .progress-bar {
+      stroke-dasharray: 345;
+      stroke-dashoffset: 345;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .progress-bar.ae { stroke: #9999f7; }
+    .progress-bar.pr { stroke: #ea77ff; }
+    .progress-bar.ps { stroke: #31a8ff; }
+    .progress-bar.avg { stroke: #00ffcc; }
+
+    .circle-progress .number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .skill-card h4 {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* SEE MY WORK PAGE */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-card);
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      color: #fff;
+      outline: none;
+    }
+
+    .form-group select option {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      padding: 10px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .portfolio-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-box {
+      width: 100%;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ratio-9-16 { aspect-ratio: 9/16; max-height: 400px; }
+    .ratio-1-1 { aspect-ratio: 1/1; }
+    .ratio-16-9 { aspect-ratio: 16/9; }
+
+    .media-box img, .media-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portfolio-info {
+      padding: 1.2rem;
+    }
+
+    .portfolio-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .price-card {
+      text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .price-card .price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 1rem 0;
+      color: var(--accent-color);
+    }
+
+    .price-card.featured {
+      border: 1px solid var(--accent-color);
+    }
+
+    .admin-submissions-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--border-card);
+      padding: 1.5rem;
+      border-radius: 14px;
+      margin-top: 2rem;
+    }
+
+    .sub-item {
+      background: rgba(0,0,0,0.4);
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .portal-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .portal-tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      padding: 0.8rem 1.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .portal-tab-btn.active {
+      background: var(--accent-color);
+      color: #fff;
+    }
+
+    .portal-content {
+      display: none;
+    }
+
+    .portal-content.active {
+      display: block;
+    }
+
+    .calculation-box {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1.5rem;
+      border-radius: 14px;
+      margin: 1.5rem 0;
+      border: 1px dashed var(--border-card);
+    }
+
+    .how-text {
+      font-size: 0.82rem;
+      color: #2997ff;
+      margin-top: 3px;
+    }
+
+    .total-payable-banner {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      background: rgba(0, 113, 227, 0.2);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      border: 1px solid rgba(0, 113, 227, 0.4);
+    }
+
+    .tenant-select-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tenant-chip {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-card);
+      padding: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .tenant-chip:hover, .tenant-chip.selected {
+      border-color: var(--accent-color);
+      background: rgba(0, 113, 227, 0.1);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar with Multi-Language Selector -->
+  <nav class="navbar">
+    <div class="logo" onclick="playClickSound(); switchPage('home')">Yash<span>.editverse</span></div>
+    <div class="nav-right">
+      <select id="languageSelector" class="lang-select" onchange="playClickSound(); changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="bn">বাংলা (Bengali)</option>
+        <option value="mr">मराठी (Marathi)</option>
+        <option value="gu">ગુજરાતી (Gujarati)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+      </select>
+      <ul class="nav-links">
+        <li><button onclick="playClickSound(); switchPage('home')" id="navHomeBtn" class="active" data-i18n="nav_home">Home</button></li>
+        <li><button onclick="playClickSound(); switchPage('work')" id="navWorkBtn" data-i18n="nav_work">See My Work</button></li>
+        <li><button onclick="playClickSound(); switchPage('tenant')" id="navTenantBtn" data-i18n="nav_tenant">Tenant Portal</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE 1: HOME PAGE -->
+  <div id="home-page" class="page-view active">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="apple-heading"><span data-i18n="hi_im">Hi, I am</span> <span>Yash Chaurasiya</span></h1>
+        <p class="subtitle" data-i18n="roles">Video Editor | Motion Graphics | Thumbnail Designer</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="playClickSound(); switchPage('work')"><i class="fa-solid fa-play"></i> <span data-i18n="btn_see_work">See My Work</span></button>
+          <button class="btn btn-secondary" onclick="playClickSound(); switchPage('tenant')"><i class="fa-solid fa-building"></i> <span data-i18n="btn_tenant_portal">Tenant Portal</span></button>
+        </div>
+      </div>
+
+      <!-- About Me -->
+      <div class="glass-card about-card">
+        <h2 class="section-title" style="font-size: 2rem;" data-i18n="about_title">About Me</h2>
+        <p class="about-text" data-i18n="about_desc">
+          My name is Yash Chaurasiya, and I am 22 years old. I am an intermediate video editor currently working under 
+          <a href="https://youtube.com/@yashmittraymgrad?si=n3EdP2sbbXb1gJ3M" target="_blank" class="secret-link">YASH MITTRA - YMGRAD</a>.
+        </p>
+      </div>
+
+      <!-- Software Skills -->
+      <div class="glass-card" id="skillsSection">
+        <h3 class="section-title" style="font-size: 1.8rem; margin-bottom: 1.5rem;" data-i18n="skills_title">Software Skills & Average Mastery</h3>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="circle-progress">
+              <svg><circle cx="65" cy="65" r="55"></circle><circle cx="65" cy="65" r="55" class="progress-bar ae" data-percent="45"></circle></svg>
+              <div class="number">0%</div>
+            </div>
+            <h4>After Effects</h4>
+          </div>
+          <div class="skill-card">
+            <div class="circle-progress">
+              <svg><circle cx="65" cy="65" r="55"></circle><circle cx="65" cy="65" r="55" class="progress-bar pr" data-percent="62"></circle></svg>
+              <div class="number">0%</div>
+            </div>
+            <h4>Premiere Pro</h4>
+          </div>
+          <div class="skill-card">
+            <div class="circle-progress">
+              <svg><circle cx="65" cy="65" r="55"></circle><circle cx="65" cy="65" r="55" class="progress-bar ps" data-percent="28"></circle></svg>
+              <div class="number">0%</div>
+            </div>
+            <h4>Photoshop</h4>
+          </div>
+          <div class="skill-card">
+            <div class="circle-progress">
+              <svg><circle cx="65" cy="65" r="55"></circle><circle cx="65" cy="65" r="55" class="progress-bar avg" data-percent="45"></circle></svg>
+              <div class="number">0%</div>
+            </div>
+            <h4 data-i18n="avg_skill_label">Overall Skill Average</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: SEE MY WORK PAGE -->
+  <div id="work-page" class="page-view">
+    <div class="container">
+      <h2 class="section-title" data-i18n="portfolio_title">My Portfolio & Works</h2>
+
+      <!-- Admin Upload Portal -->
+      <div class="glass-card" id="adminUploadSection">
+        <h3><i class="fa-solid fa-lock"></i> <span data-i18n="admin_upload_title">Yash's Admin Upload Portal</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;" data-i18n="admin_upload_desc">Only Yash Chaurasiya can post new work. Enter admin password to unlock upload form.</p>
+        
+        <div id="adminLoginForm">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <input type="password" id="adminPassInput" placeholder="Enter Admin Password" data-i18n-placeholder="ph_admin_pass" style="flex: 1; min-width: 200px; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-card); color: #fff;">
+            <button class="btn btn-primary" onclick="playClickSound(); verifyAdminPassword()" data-i18n="btn_unlock">Unlock Upload</button>
+          </div>
+        </div>
+
+        <form id="portfolioUploadForm" class="hidden" onsubmit="handlePortfolioUpload(event)" style="margin-top: 1.5rem;">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="lbl_proj_title">Project Title *</label>
+              <input type="text" id="pTitle" required placeholder="e.g. Cinematic Motion Reel" data-i18n-placeholder="ph_proj_title">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lbl_aspect_ratio">Select Aspect Ratio Format *</label>
+              <select id="pRatio" required>
+                <option value="ratio-9-16" data-i18n="opt_ratio_1">Vertical 9:16 (Reels / Shorts)</option>
+                <option value="ratio-1-1" data-i18n="opt_ratio_2">Square 1:1 (Instagram Post)</option>
+                <option value="ratio-16-9" data-i18n="opt_ratio_3">Landscape 16:9 (YouTube Long Video)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="lbl_desc">Description (Optional)</label>
+            <textarea id="pDesc" placeholder="Brief info about the edit..." data-i18n-placeholder="ph_desc"></textarea>
+          </div>
+          <div class="form-group">
+            <label data-i18n="lbl_file">Upload File (Video / Photo up to 1GB) *</label>
+            <input type="file" id="pFile" accept="image/*,video/*" required>
+          </div>
+          <button type="submit" class="btn btn-primary" onclick="playClickSound()" data-i18n="btn_post_work">Post Video / Work</button>
+        </form>
+      </div>
+
+      <div class="portfolio-grid" id="portfolioGallery">
+        <div class="portfolio-card">
+          <div class="media-box ratio-9-16">
+            <i class="fa-solid fa-play" style="font-size: 2rem; color: #888;"></i>
+          </div>
+          <div class="portfolio-info">
+            <h4 data-i18n="sample_work_title">Cyberpunk Reel Edit</h4>
+            <p data-i18n="sample_work_desc">Fast-paced color grade & sound design.</p>
+            <div class="portfolio-actions">
+              <a href="#" class="btn btn-secondary btn-sm" onclick="playClickSound()" data-i18n="btn_download"><i class="fa-solid fa-download"></i> Download</a>
+              <button class="btn btn-secondary btn-sm" onclick="playClickSound(); deletePortfolioItem(this)" data-i18n="btn_delete"><i class="fa-solid fa-trash"></i> Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem;" data-i18n="pricing_title">Professional Editing Rates</h3>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h4 data-i18n="price_1_title">Reels / Shorts</h4>
+          <div class="price">₹200 <span style="font-size:0.9rem; color:var(--text-muted)" data-i18n="price_per_video">/ video</span></div>
+          <p data-i18n="price_1_desc">High retention cuts, captions, sound design & motion graphics.</p>
+        </div>
+        <div class="price-card featured">
+          <h4 data-i18n="price_2_title">Long Video (3-10 min)</h4>
+          <div class="price">₹500 <span style="font-size:0.9rem; color:var(--text-muted)" data-i18n="price_per_video">/ video</span></div>
+          <p data-i18n="price_2_desc">Engaging storytelling, B-roll integration & smooth transitions.</p>
+        </div>
+        <div class="price-card">
+          <h4 data-i18n="price_3_title">Long Video (15 min+)</h4>
+          <div class="price">₹1,000 <span style="font-size:0.9rem; color:var(--text-muted)" data-i18n="price_per_video">/ video</span></div>
+          <p data-i18n="price_3_desc">In-depth timeline editing, advanced grading & complete audio polish.</p>
+        </div>
+      </div>
+
+      <!-- DM for Work Form -->
+      <div class="glass-card" style="margin-top: 3rem;">
+        <h3 data-i18n="dm_title"><i class="fa-solid fa-paper-plane"></i> DM for Work</h3>
+        <form id="dmWorkForm" onsubmit="handleDmSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="dm_name">Your Name *</label>
+              <input type="text" id="dmName" required placeholder="Full Name" data-i18n-placeholder="ph_name">
+            </div>
+            <div class="form-group">
+              <label data-i18n="dm_email">Email Address *</label>
+              <input type="email" id="dmEmail" required placeholder="name@example.com" data-i18n-placeholder="ph_email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="dm_insta">Instagram ID *</label>
+              <input type="text" id="dmInsta" required placeholder="@yourhandle" data-i18n-placeholder="ph_insta">
+            </div>
+            <div class="form-group">
+              <label data-i18n="dm_phone">Phone Number *</label>
+              <input type="tel" id="dmPhone" required placeholder="10-digit mobile number" data-i18n-placeholder="ph_phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="dm_type">Work Type *</label>
+            <select id="dmType" required>
+              <option value="" disabled selected data-i18n="dm_select">Select Service</option>
+              <option value="Video Editing" data-i18n="opt_serv_1">Video Editing</option>
+              <option value="Motion Graphics" data-i18n="opt_serv_2">Motion Graphics</option>
+              <option value="Thumbnail Design" data-i18n="opt_serv_3">Thumbnail & Poster Design</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="dm_desc">Project Description & Requirements *</label>
+            <textarea id="dmDesc" rows="4" required placeholder="Specify topic, style, references..." data-i18n-placeholder="ph_project_desc"></textarea>
+          </div>
+          <div class="form-group">
+            <label data-i18n="dm_file">Upload Raw Footage / Files (Up to 1GB) *</label>
+            <input type="file" id="dmFile" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" onclick="playClickSound()" data-i18n="dm_submit">Submit Project Request</button>
+        </form>
+
+        <div class="admin-submissions-box" id="adminDmBox">
+          <h4 style="margin-bottom: 1rem;" data-i18n="admin_sub_title"><i class="fa-solid fa-lock"></i> Received DM Submissions (Admin View Only)</h4>
+          <div id="dmSubmissionsList">
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="no_subs">No new client submissions yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: TENANT PORTAL PAGE -->
+  <div id="tenant-page" class="page-view">
+    <div class="container">
+      <h2 class="section-title" data-i18n="portal_title">Tenant Utility & Billing Portal</h2>
+
+      <div class="portal-tabs">
+        <button class="portal-tab-btn active" onclick="playClickSound(); switchPortalTab('landlord')" data-i18n="tab_landlord">Landlord Control Panel</button>
+        <button class="portal-tab-btn" onclick="playClickSound(); switchPortalTab('tenant')" data-i18n="tab_tenant">Tenant Access Portal</button>
+      </div>
+
+      <div id="landlordPanel" class="portal-content active">
+        <div class="glass-card" id="landlordAuthCard">
+          <h3 data-i18n="landlord_auth_title">Landlord Login / Registration</h3>
+          <form id="landlordLoginForm" onsubmit="handleLandlordLogin(event)">
+            <div class="form-group">
+              <label data-i18n="lbl_phone_email">Registered Phone Number or Email</label>
+              <input type="text" id="lLoginId" required placeholder="Enter Phone or Email" data-i18n-placeholder="ph_phone_email">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lbl_password">Password</label>
+              <input type="password" id="lLoginPass" required placeholder="Enter password" data-i18n-placeholder="ph_password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" onclick="playClickSound()" data-i18n="btn_landlord_login">Login to Landlord Dashboard</button>
+            <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+              <span data-i18n="new_here">New here?</span> <a href="#" onclick="playClickSound(); toggleLandlordAuthMode()" style="color: var(--accent-color)" data-i18n="create_account_link">Create Landlord Account</a>
+            </p>
+          </form>
+
+          <form id="landlordRegisterForm" class="hidden" onsubmit="handleLandlordRegister(event)">
+            <div class="form-group">
+              <label data-i18n="lbl_fullname">Full Name</label>
+              <input type="text" required placeholder="Full Name" data-i18n-placeholder="ph_name">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lbl_mobile_otp">Mobile Number (For OTP Verification) *</label>
+              <input type="tel" id="lRegPhone" required placeholder="10-digit mobile number" data-i18n-placeholder="ph_10_digit">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lbl_email">Email ID</label>
+              <input type="email" required placeholder="name@example.com" data-i18n-placeholder="ph_email">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label data-i18n="lbl_create_pass">Create Password</label>
+                <input type="password" required placeholder="Enter password" data-i18n-placeholder="ph_password">
+              </div>
+              <div class="form-group">
+                <label data-i18n="lbl_confirm_pass">Confirm Password</label>
+                <input type="password" required placeholder="Confirm password" data-i18n-placeholder="ph_password">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" onclick="playClickSound()" data-i18n="btn_send_otp">Send OTP & Register</button>
+          </form>
+        </div>
+
+        <div id="landlordDashboard" class="glass-card hidden">
+          <div class="portal-tabs" style="margin-bottom: 2rem;">
+            <button class="portal-tab-btn active" onclick="playClickSound(); switchLandlordTab('tenantsTab')" data-i18n="sub_tab_tenants"><i class="fa-solid fa-users"></i> Tenants List</button>
+            <button class="portal-tab-btn" onclick="playClickSound(); switchLandlordTab('billingTab')" data-i18n="sub_tab_billing"><i class="fa-solid fa-file-invoice-dollar"></i> Billing & Meter Update</button>
+          </div>
+
+          <div id="tenantsTab" class="landlord-sub-tab">
+            <h3 data-i18n="reg_tenants_title">Registered Tenants List</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;" data-i18n="reg_tenants_desc">Click on any tenant to update their latest bill or add a new tenant below.</p>
+            
+            <div class="tenant-select-list" id="landlordTenantChips"></div>
+
+            <hr style="border:0; border-top:1px solid var(--border-card); margin: 2rem 0;">
+
+            <h3 data-i18n="add_new_tenant_title">Add New Tenant</h3>
+            <form id="addNewTenantForm" onsubmit="addNewTenant(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label data-i18n="lbl_room_no">Room Number *</label>
+                  <input type="text" id="newRoomNo" required placeholder="e.g. 1, 2, 3">
+                </div>
+                <div class="form-group">
+                  <label data-i18n="lbl_tenant_name">Tenant Name *</label>
+                  <input type="text" id="newTenantName" required placeholder="e.g. Rim, Kim" data-i18n-placeholder="ph_name">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label data-i18n="lbl_tenant_phone">Phone Number (Used for Tenant Login) *</label>
+                  <input type="tel" id="newTenantPhone" required placeholder="10-digit mobile" data-i18n-placeholder="ph_10_digit">
+                </div>
+                <div class="form-group">
+                  <label data-i18n="lbl_room_rent">Room Rent (₹)</label>
+                  <input type="number" id="newRoomRent" value="4000">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" onclick="playClickSound()" data-i18n="btn_save_tenant"><i class="fa-solid fa-user-plus"></i> Save New Tenant</button>
+            </form>
+          </div>
+
+          <div id="billingTab" class="landlord-sub-tab hidden">
+            <h3 data-i18n="calc_bill_title">Calculate & Update Bill for Selected Tenant</h3>
+            <div style="background: rgba(0,113,227,0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
+              <p><strong data-i18n="selected_tenant_label">Selected Tenant:</strong> <span id="activeBillingTenant">None Selected</span> (Room <span id="activeBillingRoom">-</span>)</p>
+            </div>
+
+            <form id="billUpdateForm" onsubmit="saveAndShareBill(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label data-i18n="lbl_room_rent">Room Rent (₹)</label>
+                  <input type="number" id="bRoomRent" value="4000" oninput="calculateBillMath()">
+                </div>
+                <div class="form-group">
+                  <label data-i18n="lbl_water_charge">Water Charge (₹)</label>
+                  <input type="number" id="bWater" value="200" oninput="calculateBillMath()">
+                </div>
+                <div class="form-group">
+                  <label data-i18n="lbl_other_charge">Other Charges (₹)</label>
+                  <input type="number" id="bOther" value="0" oninput="calculateBillMath()">
+                </div>
+                <div class="form-group">
+                  <label data-i18n="lbl_unit_rate">Unit Rate (₹ per unit)</label>
+                  <input type="number" id="bUnitRate" value="10" oninput="calculateBillMath()">
+                </div>
+              </div>
+
+              <div class="calculation-box">
+                <h4 data-i18n="meter_calc_title">Meter Reading Calculation</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label data-i18n="lbl_curr_reading">Current Meter Reading *</label>
+                    <input type="number" id="bCurrReading" required placeholder="Enter current meter value" oninput="calculateBillMath()">
+                  </div>
+                  <div class="form-group">
+                    <label data-i18n="lbl_prev_reading">Previous Meter Reading (Locked)</label>
+                    <input type="number" id="bPrevReading" readonly value="120" style="background: rgba(255,255,255,0.02); cursor: not-allowed;">
+                  </div>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                  <p><strong data-i18n="total_units_consumed">Total Units Consumed:</strong> <span id="calcTotalUnits">0</span></p>
+                  <div class="how-text" id="calcUnitsHow">Current (0) - Previous (120) = 0 Units</div>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                  <p><strong data-i18n="total_elec_amount">Total Electricity Amount:</strong> ₹<span id="calcElecAmount">0</span></p>
+                  <div class="how-text" id="calcElecHow">0 Units × ₹10 = ₹0</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                  <label data-i18n="lbl_remaining_due">Remaining / Due Balance (₹)</label>
+                  <input type="number" id="bRemaining" value="0" oninput="calculateBillMath()">
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                  <label data-i18n="lbl_meter_image"><i class="fa-solid fa-camera"></i> Upload Meter Reading Image (Up to 500MB) *</label>
+                  <input type="file" id="bMeterImage" accept="image/*" required>
+                </div>
+
+                <div class="total-payable-banner">
+                  <span data-i18n="total_amount_payable">Total Amount Payable:</span> ₹<span id="calcGrandTotal">0</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="submit" class="btn btn-primary" onclick="playClickSound()" data-i18n="btn_save_bill"><i class="fa-solid fa-floppy-disk"></i> Save & Generate Bill</button>
+                <button type="button" class="btn btn-secondary" onclick="playClickSound(); shareBillOnWhatsApp()" data-i18n="btn_share_whatsapp"><i class="fa-brands fa-whatsapp" style="color: #25d366; font-size: 1.2rem;"></i> Share via WhatsApp PDF</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="tenantPanel" class="portal-content">
+        <div class="glass-card" id="tenantLoginCard">
+          <h3 data-i18n="tenant_login_title">Tenant Access Login</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;" data-i18n="tenant_login_desc">Enter your Room Number and Mobile Number registered by your Landlord.</p>
+          
+          <form id="tenantAuthForm" onsubmit="handleTenantLogin(event)">
+            <div class="form-group">
+              <label data-i18n="lbl_room_no">Room Number *</label>
+              <input type="text" id="tAuthRoom" required placeholder="e.g. 1, 2, 3">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lbl_reg_mobile">Registered Mobile Number *</label>
+              <input type="tel" id="tAuthPhone" required placeholder="10-digit mobile number" data-i18n-placeholder="ph_10_digit">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" onclick="playClickSound()" data-i18n="btn_view_bill">View My Bill & History</button>
+          </form>
+        </div>
+
+        <div id="tenantDashboard" class="glass-card hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 data-i18n="welcome_tenant"><i class="fa-solid fa-receipt"></i> Welcome, <span id="tenantDashName">Tenant</span> (Room <span id="tenantDashRoom">1</span>)</h3>
+            <button class="btn btn-secondary btn-sm" onclick="playClickSound(); logoutTenant()" data-i18n="btn_logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 14px; border: 1px solid var(--border-card); margin-bottom: 2rem;">
+            <h4 style="color: var(--accent-color); margin-bottom: 1.0rem;" data-i18n="current_active_bill">Current Active Bill</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 1rem;">
+              <li><span data-i18n="bill_room_rent">Room Rent:</span> ₹<span id="tViewRent">4000</span></li>
+              <li><span data-i18n="bill_water">Water Charge:</span> ₹<span id="tViewWater">200</span></li>
+              <li><span data-i18n="bill_elec">Electricity</span> (<span id="tViewUnits">45</span> <span data-i18n="units_label">Units</span>): ₹<span id="tViewElecCost">450</span></li>
+              <li><span data-i18n="bill_other">Other Charges:</span> ₹<span id="tViewOther">0</span></li>
+              <li><span data-i18n="bill_due">Previous Due:</span> ₹<span id="tViewDue">0</span></li>
+            </ul>
+            <div style="font-size: 1.3rem; font-weight: 700; margin-top: 1rem; border-top: 1px solid var(--border-card); padding-top: 0.8rem;">
+              <span data-i18n="total_payable">Total Payable:</span> ₹<span id="tViewGrandTotal">4,650</span>
+            </div>
+          </div>
+
+          <h4 data-i18n="billing_history_title">Billing History & Old Bills</h4>
+          <div id="tenantHistoryList" style="margin-top: 1rem;">
+            <div style="background: rgba(255,255,255,0.04); padding: 1rem; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong data-i18n="history_date">Bill Date: 09 Sep 2026</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted);"><span data-i18n="history_amt">Amount: ₹4,500</span> | <span data-i18n="history_status">Status: Paid</span></p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="playClickSound(); alert('Viewing full bill details for 09 Sep 2026')" data-i18n="btn_see_full_bill"><i class="fa-solid fa-eye"></i> See Full Bill</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* Web Audio API based Click Sound Generator (No external audio files needed) */
+    function playClickSound() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); // Pitch
+        oscillator.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
+        
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.05);
+      } catch(e) {
+        // Fallback if audio context is restricted
+      }
+    }
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+
+      if(pageId === 'home') {
+        document.getElementById('home-page').classList.add('active');
+        document.getElementById('navHomeBtn').classList.add('active');
+        triggerSkillAnimation();
+      } else if(pageId === 'work') {
+        document.getElementById('work-page').classList.add('active');
+        document.getElementById('navWorkBtn').classList.add('active');
+      } else if(pageId === 'tenant') {
+        document.getElementById('tenant-page').classList.add('active');
+        document.getElementById('navTenantBtn').classList.add('active');
+      }
+      window.scrollTo(0, 0);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderLandlordTenants();
+      setupScrollObserver();
+      triggerSkillAnimation();
+    });
+
+    function setupScrollObserver() {
+      const skillsSection = document.getElementById('skillsSection');
+      if(!skillsSection) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            triggerSkillAnimation();
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(skillsSection);
+    }
+
+    function triggerSkillAnimation() {
+      document.querySelectorAll('#skillsSection .skill-card').forEach(card => {
+        const bar = card.querySelector('.progress-bar');
+        const numEl = card.querySelector('.number');
+        if(bar) {
+          const target = parseInt(bar.getAttribute('data-percent'));
+          bar.style.transition = 'none';
+          bar.style.strokeDashoffset = 345;
+          numEl.innerText = '0%';
+
+          setTimeout(() => {
+            bar.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            const circumference = 345;
+            const offset = circumference - (circumference * target) / 100;
+            bar.style.strokeDashoffset = offset;
+
+            let current = 0;
+            let step = Math.max(1, Math.floor(target / 40));
+            let interval = setInterval(() => {
+              current += step;
+              if(current >= target) {
+                current = target;
+                clearInterval(interval);
+              }
+              numEl.innerText = current + '%';
+            }, 30);
+          }, 50);
+        }
+      });
+    }
+
+    /* Ultimate Multi-language Dictionary for All Pages */
+    const translations = {
+      en: {
+        nav_home: "Home", nav_work: "See My Work", nav_tenant: "Tenant Portal",
+        hi_im: "Hi, I am", roles: "Video Editor | Motion Graphics | Thumbnail Designer",
+        btn_see_work: "See My Work", btn_tenant_portal: "Tenant Portal",
+        about_title: "About Me", 
+        about_desc: "My name is Yash Chaurasiya, and I am 22 years old. I am an intermediate video editor currently working under YASH MITTRA - YMGRAD.",
+        skills_title: "Software Skills & Average Mastery", avg_skill_label: "Overall Skill Average",
+        portfolio_title: "My Portfolio & Works", admin_upload_title: "Yash's Admin Upload Portal",
+        admin_upload_desc: "Only Yash Chaurasiya can post new work. Enter admin password to unlock upload form.",
+        btn_unlock: "Unlock Upload", lbl_proj_title: "Project Title *", lbl_aspect_ratio: "Select Aspect Ratio Format *",
+        opt_ratio_1: "Vertical 9:16 (Reels / Shorts)", opt_ratio_2: "Square 1:1 (Instagram Post)", opt_ratio_3: "Landscape 16:9 (YouTube Long Video)",
+        lbl_desc: "Description (Optional)", lbl_file: "Upload File (Video / Photo up to 1GB) *", btn_post_work: "Post Video / Work",
+        sample_work_title: "Cyberpunk Reel Edit", sample_work_desc: "Fast-paced color grade & sound design.",
+        btn_download: "Download", btn_delete: "Delete",
+        pricing_title: "Professional Editing Rates", price_1_title: "Reels / Shorts",
+        price_1_desc: "High retention cuts, captions, sound design & motion graphics.",
+        price_2_title: "Long Video (3-10 min)", price_2_desc: "Engaging storytelling, B-roll integration & smooth transitions.",
+        price_3_title: "Long Video (15 min+)", price_3_desc: "In-depth timeline editing, advanced grading & complete audio polish.",
+        price_per_video: "/ video",
+        dm_title: "DM for Work", dm_name: "Your Name *", dm_email: "Email Address *", dm_insta: "Instagram ID *",
+        dm_phone: "Phone Number *", dm_type: "Work Type *", dm_select: "Select Service",
+        opt_serv_1: "Video Editing", opt_serv_2: "Motion Graphics", opt_serv_3: "Thumbnail & Poster Design",
+        dm_desc: "Project Description & Requirements *", dm_file: "Upload Raw Footage / Files (Up to 1GB) *",
+        dm_submit: "Submit Project Request", admin_sub_title: "Received DM Submissions (Admin View Only)",
+        no_subs: "No new client submissions yet.", portal_title: "Tenant Utility & Billing Portal",
+        tab_landlord: "Landlord Control Panel", tab_tenant: "Tenant Access Portal",
+        landlord_auth_title: "Landlord Login / Registration", lbl_phone_email: "Registered Phone Number or Email",
+        lbl_password: "Password", btn_landlord_login: "Login to Landlord Dashboard",
+        new_here: "New here?", create_account_link: "Create Landlord Account",
+        lbl_fullname: "Full Name", lbl_mobile_otp: "Mobile Number (For OTP Verification) *",
+        lbl_email: "Email ID", lbl_create_pass: "Create Password", lbl_confirm_pass: "Confirm Password",
+        btn_send_otp: "Send OTP & Register", sub_tab_tenants: "Tenants List", sub_tab_billing: "Billing & Meter Update",
+        reg_tenants_title: "Registered Tenants List", reg_tenants_desc: "Click on any tenant to update their latest bill or add a new tenant below.",
+        add_new_tenant_title: "Add New Tenant", lbl_room_no: "Room Number *", lbl_tenant_name: "Tenant Name *",
+        lbl_tenant_phone: "Phone Number (Used for Tenant Login) *", lbl_room_rent: "Room Rent (₹)",
+        btn_save_tenant: "Save New Tenant", calc_bill_title: "Calculate & Update Bill for Selected Tenant",
+        selected_tenant_label: "Selected Tenant:", lbl_water_charge: "Water Charge (₹)", lbl_other_charge: "Other Charges (₹)",
+        lbl_unit_rate: "Unit Rate (₹ per unit)", meter_calc_title: "Meter Reading Calculation",
+        lbl_curr_reading: "Current Meter Reading *", lbl_prev_reading: "Previous Meter Reading (Locked)",
+        total_units_consumed: "Total Units Consumed:", total_elec_amount: "Total Electricity Amount:",
+        lbl_remaining_due: "Remaining / Due Balance (₹)", lbl_meter_image: "Upload Meter Reading Image (Up to 500MB) *",
+        total_amount_payable: "Total Amount Payable:", btn_save_bill: "Save & Generate Bill",
+        btn_share_whatsapp: "Share via WhatsApp PDF", tenant_login_title: "Tenant Access Login",
+        tenant_login_desc: "Enter your Room Number and Mobile Number registered by your Landlord.",
+        lbl_reg_mobile: "Registered Mobile Number *", btn_view_bill: "View My Bill & History",
+        welcome_tenant: "Welcome,", btn_logout: "Logout", current_active_bill: "Current Active Bill",
+        bill_room_rent: "Room Rent:", bill_water: "Water Charge:", bill_elec: "Electricity",
+        units_label: "Units", bill_other: "Other Charges:", bill_due: "Previous Due:", total_payable: "Total Payable:",
+        billing_history_title: "Billing History & Old Bills", history_date: "Bill Date: 09 Sep 2026",
+        history_amt: "Amount: ₹4,500", history_status: "Status: Paid", btn_see_full_bill: "See Full Bill",
+        ph_admin_pass: "Enter Admin Password", ph_proj_title: "e.g. Cinematic Motion Reel", ph_desc: "Brief info about the edit...",
+        ph_name: "Full Name", ph_email: "name@example.com", ph_insta: "@yourhandle", ph_phone: "10-digit mobile number",
+        ph_project_desc: "Specify topic, style, references...", ph_phone_email: "Enter Phone or Email", ph_password: "Enter password",
+        ph_10_digit: "10-digit mobile number"
+      },
+      hi: {
+        nav_home: "होम", nav_work: "मेरा काम देखें", nav_tenant: "किरायेदार पोर्टल",
+        hi_im: "नमस्ते, मैं हूँ", roles: "वीडियो एडिटर | मोशन ग्राफिक्स | थंबनेल डिजाइनर",
+        btn_see_work: "मेरा काम देखें", btn_tenant_portal: "किरायेदार पोर्टल",
+        about_title: "मेरे बारे में", 
+        about_desc: "मेरा नाम यश चौरसिया है, मैं 22 साल का हूँ। मैं एक वीडियो एडिटर हूँ जो अभी इंटरमीडिएट लेवल पर हूँ और अभी यश मित्रा - YMGRAD के अंडर काम कर रहा हूँ।",
+        skills_title: "सॉफ्टवेयर स्किल्स और औसत महारत", avg_skill_label: "कुल कौशल औसत",
+        portfolio_title: "मेरा पोर्टफोलियो और वर्क्स", admin_upload_title: "यश का एडमिन अपलोड पोर्टल",
+        admin_upload_desc: "केवल यश चौरसिया नया काम पोस्ट कर सकते हैं। अपलोड फॉर्म खोलने के लिए एडमिन पासवर्ड दर्ज करें।",
+        btn_unlock: "अनलॉक करें", lbl_proj_title: "प्रोजेक्ट का नाम *", lbl_aspect_ratio: "आस्पेक्ट रेशियो चुनें *",
+        opt_ratio_1: "वर्टिकल 9:16 (रील्स / शॉर्ट्स)", opt_ratio_2: "स्क्वायर 1:1 (इंस्टाग्राम पोस्ट)", opt_ratio_3: "लैंडस्केप 16:9 (यूट्यूब लॉन्ग वीडियो)",
+        lbl_desc: "विवरण (वैकल्पिक)", lbl_file: "फाइल अपलोड करें (1GB तक) *", btn_post_work: "वीडियो/काम पोस्ट करें",
+        sample_work_title: "साइबरपंक रील एडिट", sample_work_desc: "फास्ट-पेस्ड कलर ग्रेड और साउंड डिजाइन।",
+        btn_download: "डाउनलोड", btn_delete: "डिलीट",
+        pricing_title: "प्रोफेशनल एडिटिंग रेट्स", price_1_title: "रील्स / शॉर्ट्स",
+        price_1_desc: "हाई रिटेंशन कट्स, कैप्शन, साउंड डिजाइन और मोशन ग्राफिक्स।",
+        price_2_title: "लॉन्ग वीडियो (3-10 मिनट)", price_2_desc: "आकर्षक कहानी, बी-रोल और स्मूथ ट्रांजिशन।",
+        price_3_title: "लॉन्ग वीडियो (15 मिनट+)", price_3_desc: "गहन टाइमलाइन एडिटिंग, एडवांस्ड ग्रेडिंग और ऑडियो पॉलिश।",
+        price_per_video: "/ वीडियो",
+        dm_title: "काम के लिए डीएम करें", dm_name: "आपका नाम *", dm_email: "ईमेल आईडी *", dm_insta: "इंस्टाग्राम आईडी *",
+        dm_phone: "फोन नंबर *", dm_type: "कार्य का प्रकार *", dm_select: "सेवा चुनें",
+        opt_serv_1: "वीडियो एडिटिंग", opt_serv_2: "मोशन ग्राफिक्स", opt_serv_3: "थंबनेल और पोस्टर डिजाइन",
+        dm_desc: "प्रोजेक्ट विवरण और आवश्यकताएं *", dm_file: "रॉ फुटेज / फाइल अपलोड करें (1GB तक) *",
+        dm_submit: "प्रोजेक्ट अनुरोध सबमिट करें", admin_sub_title: "प्राप्त डीएम सबमिशन (केवल एडमिन दृश्य)",
+        no_subs: "अभी तक कोई नया क्लाइंट सबमिशन नहीं है।", portal_title: "किरायेदार यूटिलिटी और बिलिंग पोर्टल",
+        tab_landlord: "लैंडलॉर्ड कंट्रोल पैनल", tab_tenant: "किरायेदार एक्सेस पोर्टल",
+        landlord_auth_title: "लैंडलॉर्ड लॉगिन / रजिस्ट्रेशन", lbl_phone_email: "पंजीकृत फोन नंबर या ईमेल",
+        lbl_password: "पासवर्ड", btn_landlord_login: "लैंडलॉर्ड डैशबोर्ड में लॉगिन करें",
+        new_here: "नया खाता बनाना चाहते हैं?", create_account_link: "लैंडलॉर्ड अकाउंट बनाएं",
+        lbl_fullname: "पूरा नाम", lbl_mobile_otp: "मोबाइल नंबर (OTP सत्यापन के लिए) *",
+        lbl_email: "ईमेल आईडी", lbl_create_pass: "पासवर्ड बनाएं", lbl_confirm_pass: "पासवर्ड की पुष्टि करें",
+        btn_send_otp: "OTP भेजें और रजिस्टर करें", sub_tab_tenants: "किरायेदार सूची", sub_tab_billing: "बिलिंग और मीटर अपडेट",
+        reg_tenants_title: "पंजीकृत किरायेदार सूची", reg_tenants_desc: "नवीनतम बिल अपडेट करने या नया किरायेदार जोड़ने के लिए किसी भी किरायेदार पर क्लिक करें।",
+        add_new_tenant_title: "नया किरायेदार जोड़ें", lbl_room_no: "रूम नंबर *", lbl_tenant_name: "किरायेदार का नाम *",
+        lbl_tenant_phone: "फोन नंबर (किरायेदार लॉगिन के लिए) *", lbl_room_rent: "रूम रेंट (₹)",
+        btn_save_tenant: "नया किरायेदार सेव करें", calc_bill_title: "चयनित किरायेदार के लिए बिल कैलकुलेट और अपडेट करें",
+        selected_tenant_label: "चयनित किरायेदार:", lbl_water_charge: "पानी का चार्ज (₹)", lbl_other_charge: "अन्य चार्ज (₹)",
+        lbl_unit_rate: "यूनिट रेट (₹ प्रति यूनिट)", meter_calc_title: "मीटर रीडिंग कैलकुलेशन",
+        lbl_curr_reading: "वर्तमान मीटर रीडिंग *", lbl_prev_reading: "पिछली मीटर रीडिंग (लॉक्ड)",
+        total_units_consumed: "कुल खर्च हुई यूनिट्स:", total_elec_amount: "कुल बिजली राशि:",
+        lbl_remaining_due: "बकाया / पिछला बैलेंस (₹)", lbl_meter_image: "मीटर रीडिंग इमेज अपलोड करें (500MB तक) *",
+        total_amount_payable: "कुल देय राशि:", btn_save_bill: "बिल सेव और जनरेट करें",
+        btn_share_whatsapp: "WhatsApp PDF के जरिए शेयर करें", tenant_login_title: "किरायेदार एक्सेस लॉगिन",
+        tenant_login_desc: "लैंडलॉर्ड द्वारा दर्ज किया गया अपना रूम नंबर और मोबाइल नंबर दर्ज करें।",
+        lbl_reg_mobile: "पंजीकृत मोबाइल नंबर *", btn_view_bill: "मेरा बिल और इतिहास देखें",
+        welcome_tenant: "स्वागत है,", btn_logout: "लॉगआउट", current_active_bill: "वर्तमान सक्रिय बिल",
+        bill_room_rent: "रूम रेंट:", bill_water: "पानी का चार्ज:", bill_elec: "बिजली",
+        units_label: "यूनिट्स", bill_other: "अन्य चार्ज:", bill_due: "पिछला बकाया:", total_payable: "कुल देय राशि:",
+        billing_history_title: "बिलिंग इतिहास और पुराने बिल", history_date: "बिल दिनांक: 09 Sep 2026",
+        history_amt: "राशि: ₹4,500", history_status: "स्थिति: भुगतान किया गया", btn_see_full_bill: "पूरा बिल देखें",
+        ph_admin_pass: "एडमिन पासवर्ड दर्ज करें", ph_proj_title: "उदा. सिनेमैटिक मोशन रील", ph_desc: "एडिट के बारे में संक्षिप्त जानकारी...",
+        ph_name: "पूरा नाम", ph_email: "name@example.com", ph_insta: "@yourhandle", ph_phone: "10-अंकों का मोबाइल नंबर",
+        ph_project_desc: "विषय, शैली, संदर्भ निर्दिष्ट करें...", ph_phone_email: "फोन या ईमेल दर्ज करें", ph_password: "पासवर्ड दर्ज करें",
+        ph_10_digit: "10-अंकों का मोबाइल नंबर"
+      }
+    };
+
+    function changeLanguage(lang) {
+      const dict = translations[lang] || translations['en'];
+      
+      // Translate elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          if(key === 'about_desc') {
+            const linkText = "YASH MITTRA - YMGRAD";
+            const linkUrl = "https://youtube.com/@yashmittraymgrad?si=n3EdP2sbbXb1gJ3M";
+            if(lang === 'en') {
+              el.innerHTML = `My name is Yash Chaurasiya, and I am 22 years old. I am an intermediate video editor currently working under <a href="${linkUrl}" target="_blank" class="secret-link">${linkText}</a>.`;
+            } else if(lang === 'hi') {
+              el.innerHTML = `मेरा नाम यश चौरसिया है, मैं 22 साल का हूँ। मैं एक वीडियो एडिटर हूँ जो अभी इंटरमीडिएट लेवल पर हूँ और अभी <a href="${linkUrl}" target="_blank" class="secret-link">${linkText}</a> के अंडर काम कर रहा हूँ।`;
+            } else {
+              el.innerText = dict[key];
+            }
+          } else {
+            el.innerText = dict[key];
+          }
+        }
+      });
+
+      // Translate placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) {
+          el.setAttribute('placeholder', dict[key]);
+        }
+      });
+    }
+
+    function verifyAdminPassword() {
+      const pass = document.getElementById('adminPassInput').value;
+      if (pass === "Anant@Prem2004") {
+        document.getElementById('adminLoginForm').classList.add('hidden');
+        document.getElementById('portfolioUploadForm').classList.remove('hidden');
+        alert("Admin access granted! Welcome Yash.");
+      } else {
+        alert("Incorrect Admin Password!");
+      }
+    }
+
+    let portfolioItems = [];
+    function handlePortfolioUpload(event) {
+      event.preventDefault();
+      const title = document.getElementById('pTitle').value;
+      const ratio = document.getElementById('pRatio').value;
+      const desc = document.getElementById('pDesc').value;
+      const fileInput = document.getElementById('pFile');
+
+      if(fileInput.files.length === 0) {
+        alert("Please select a file to upload.");
+        return;
+      }
+
+      const fileUrl = URL.createObjectURL(fileInput.files[0]);
+      const isVideo = fileInput.files[0].type.includes('video');
+
+      const gallery = document.getElementById('portfolioGallery');
+      const card = document.createElement('div');
+      card.className = 'portfolio-card';
+      card.innerHTML = `
+        <div class="media-box ${ratio}">
+          ${isVideo ? `<video src="${fileUrl}" controls autoplay muted></video>` : `<img src="${fileUrl}" alt="${title}">`}
+        </div>
+        <div class="portfolio-info">
+          <h4>${title}</h4>
+          <p>${desc || 'No description provided.'}</p>
+          <div class="portfolio-actions">
+            <a href="${fileUrl}" download="${title}" class="btn btn-secondary btn-sm" onclick="playClickSound()"><i class="fa-solid fa-download"></i> Download</a>
+            <button class="btn btn-secondary btn-sm" onclick="playClickSound(); deletePortfolioItem(this)"><i class="fa-solid fa-trash"></i> Delete</button>
+          </div>
+        </div>
+      `;
+      gallery.prepend(card);
+      document.getElementById('portfolioUploadForm').reset();
+      alert("Project posted successfully by Yash Chaurasiya!");
+    }
+
+    function deletePortfolioItem(btn) {
+      if(confirm("Are you sure you want to delete this project?")) {
+        btn.closest('.portfolio-card').remove();
+      }
+    }
+
+    let dmSubmissions = [];
+    function handleDmSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('dmName').value;
+      const email = document.getElementById('dmEmail').value;
+      const insta = document.getElementById('dmInsta').value;
+      const phone = document.getElementById('dmPhone').value;
+      const type = document.getElementById('dmType').value;
+      const desc = document.getElementById('dmDesc').value;
+      const file = document.getElementById('dmFile').files[0];
+
+      if(phone.length !== 10) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+      }
+
+      const subObj = { id: Date.now(), name, email, insta, phone, type, desc, fileName: file ? file.name : 'No file' };
+      dmSubmissions.push(subObj);
+      renderDmSubmissions();
+      document.getElementById('dmWorkForm').reset();
+      alert("Project Request submitted successfully!");
+    }
+
+    function renderDmSubmissions() {
+      const list = document.getElementById('dmSubmissionsList');
+      if(dmSubmissions.length === 0) {
+        list.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="no_subs">No new client submissions yet.</p>`;
+        return;
+      }
+      list.innerHTML = dmSubmissions.map(s => `
+        <div class="sub-item">
+          <div>
+            <strong>Client:</strong> ${s.name} (${s.phone}) | <strong>Type:</strong> ${s.type}<br>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Insta: ${s.insta} | Desc: ${s.desc} | File: ${s.fileName}</span>
+          </div>
+          <div>
+            <button class="btn btn-secondary btn-sm" onclick="playClickSound(); alert('Downloading client files...')"><i class="fa-solid fa-download"></i> Download</button>
+            <button class="btn btn-secondary btn-sm" onclick="playClickSound(); deleteDmSub(${s.id})"><i class="fa-solid fa-trash"></i> Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteDmSub(id) {
+      dmSubmissions = dmSubmissions.filter(s => s.id !== id);
+      renderDmSubmissions();
+    }
+
+    let tenantsData = [
+      { room: "1", name: "Rim", phone: "1234567890", rent: 4000, prevReading: 120 },
+      { room: "2", name: "Kim", phone: "2345678901", rent: 4200, prevReading: 210 },
+      { room: "3", name: "Pim", phone: "3456789012", rent: 4500, prevReading: 340 },
+      { room: "4", name: "Him", phone: "4567890123", rent: 4000, prevReading: 150 }
+    ];
+
+    let activeSelectedTenant = null;
+
+    function switchPortalTab(tab) {
+      document.querySelectorAll('.portal-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.portal-content').forEach(c => c.classList.remove('active'));
+      if(tab === 'landlord') {
+        event.target.classList.add('active');
+        document.getElementById('landlordPanel').classList.add('active');
+      } else {
+        event.target.classList.add('active');
+        document.getElementById('tenantPanel').classList.add('active');
+      }
+    }
+
+    function toggleLandlordAuthMode() {
+      document.getElementById('landlordLoginForm').classList.toggle('hidden');
+      document.getElementById('landlordRegisterForm').classList.toggle('hidden');
+    }
+
+    function handleLandlordLogin(event) {
+      event.preventDefault();
+      document.getElementById('landlordAuthCard').classList.add('hidden');
+      document.getElementById('landlordDashboard').classList.remove('hidden');
+      renderLandlordTenants();
+      alert("Landlord logged in successfully!");
+    }
+
+    function handleLandlordRegister(event) {
+      event.preventDefault();
+      let phone = document.getElementById('lRegPhone').value;
+      if(phone.length !== 10) { alert("Enter valid 10-digit phone number"); return; }
+      let otp = prompt("OTP has been sent to " + phone + ". Enter 6-digit OTP:");
+      if(otp) {
+        alert("Account created successfully! Please login.");
+        toggleLandlordAuthMode();
+      }
+    }
+
+    function switchLandlordTab(subTabId) {
+      document.querySelectorAll('.landlord-sub-tab').forEach(t => t.classList.add('hidden'));
+      document.getElementById(subTabId).classList.remove('hidden');
+    }
+
+    function renderLandlordTenants() {
+      const container = document.getElementById('landlordTenantChips');
+      if(tenantsData.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-muted)">No tenants added yet.</p>`;
+        return;
+      }
+      container.innerHTML = tenantsData.map(t => `
+        <div class="tenant-chip ${activeSelectedTenant && activeSelectedTenant.room === t.room ? 'selected' : ''}" onclick="playClickSound(); selectTenantForBilling('${t.room}')">
+          <strong>Room ${t.room} - ${t.name}</strong>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">${t.phone}</p>
+        </div>
+      `).join('');
+    }
+
+    function addNewTenant(event) {
+      event.preventDefault();
+      const room = document.getElementById('newRoomNo').value;
+      const name = document.getElementById('newTenantName').value;
+      const phone = document.getElementById('newTenantPhone').value;
+      const rent = parseFloat(document.getElementById('newRoomRent').value) || 4000;
+
+      if(phone.length !== 10) { alert("Enter valid 10-digit phone number"); return; }
+      if(tenantsData.some(t => t.room === room)) { alert("Room number already exists!"); return; }
+
+      tenantsData.push({ room, name, phone, rent, prevReading: 100 });
+      renderLandlordTenants();
+      document.getElementById('addNewTenantForm').reset();
+      alert("Tenant added successfully!");
+    }
+
+    function selectTenantForBilling(roomNo) {
+      activeSelectedTenant = tenantsData.find(t => t.room === roomNo);
+      if(!activeSelectedTenant) return;
+
+      renderLandlordTenants();
+      switchLandlordTab('billingTab');
+
+      document.getElementById('activeBillingTenant').innerText = activeSelectedTenant.name;
+      document.getElementById('activeBillingRoom').innerText = activeSelectedTenant.room;
+      document.getElementById('bRoomRent').value = activeSelectedTenant.rent;
+      document.getElementById('bPrevReading').value = activeSelectedTenant.prevReading;
+      document.getElementById('bCurrReading').value = activeSelectedTenant.prevReading + 30;
+      calculateBillMath();
+    }
+
+    function calculateBillMath() {
+      if(!activeSelectedTenant) return;
+      let roomRent = parseFloat(document.getElementById('bRoomRent').value) || 0;
+      let water = parseFloat(document.getElementById('bWater').value) || 0;
+      let other = parseFloat(document.getElementById('bOther').value) || 0;
+      let unitRate = parseFloat(document.getElementById('bUnitRate').value) || 10;
+      let curr = parseFloat(document.getElementById('bCurrReading').value) || 0;
+      let prev = activeSelectedTenant.prevReading;
+      let rem = parseFloat(document.getElementById('bRemaining').value) || 0;
+
+      let units = Math.max(0, curr - prev);
+      let elecCost = units * unitRate;
+      let grandTotal = roomRent + water + other + elecCost + rem;
+
+      document.getElementById('calcTotalUnits').innerText = units;
+      document.getElementById('calcUnitsHow').innerText = `Current (${curr}) - Previous (${prev}) = ${units} Units`;
+      document.getElementById('calcElecAmount').innerText = elecCost;
+      document.getElementById('calcElecHow').innerText = `${units} Units × ₹${unitRate} = ₹${elecCost}`;
+      document.getElementById('calcGrandTotal').innerText = grandTotal.toLocaleString('en-IN');
+    }
+
+    function saveAndShareBill(event) {
+      event.preventDefault();
+      const meterImg = document.getElementById('bMeterImage').files[0];
+      if(!meterImg) { alert("Please upload the meter reading image (up to 500MB)."); return; }
+      alert("Bill saved successfully for Room " + activeSelectedTenant.room + "!");
+    }
+
+    function shareBillOnWhatsApp() {
+      if(!activeSelectedTenant) { alert("Please select a tenant first."); return; }
+      let grandTotal = document.getElementById('calcGrandTotal').innerText;
+      let msg = encodeURIComponent(`Hello ${activeSelectedTenant.name}, your Room ${activeSelectedTenant.room} utility bill is ready. Total Payable: ₹${grandTotal}. Please check your Tenant Portal.`);
+      window.open(`https://wa.me/91${activeSelectedTenant.phone}?text=${msg}`, '_blank');
+    }
+
+    let loggedInTenant = null;
+
+    function handleTenantLogin(event) {
+      event.preventDefault();
+      const room = document.getElementById('tAuthRoom').value.trim();
+      const phone = document.getElementById('tAuthPhone').value.trim();
+      const matchedTenant = tenantsData.find(t => t.room === room && t.phone === phone);
+
+      if(matchedTenant) {
+        loggedInTenant = matchedTenant;
+        document.getElementById('tenantLoginCard').classList.add('hidden');
+        document.getElementById('tenantDashboard').classList.remove('hidden');
+
+        document.getElementById('tenantDashName').innerText = matchedTenant.name;
+        document.getElementById('tenantDashRoom').innerText = matchedTenant.room;
+        document.getElementById('tViewRent').innerText = matchedTenant.rent;
+        document.getElementById('tViewWater').innerText = "200";
+        document.getElementById('tViewUnits').innerText = "45";
+        document.getElementById('tViewElecCost').innerText = "450";
+        document.getElementById('tViewOther').innerText = "0";
+        document.getElementById('tViewDue').innerText = "0";
+        document.getElementById('tViewGrandTotal').innerText = (matchedTenant.rent + 200 + 450).toLocaleString('en-IN');
+      } else {
+        alert("Invalid Room Number or Mobile Number!");
+      }
+    }
+
+    function logoutTenant() {
+      loggedInTenant = null;
+      document.getElementById('tenantAuthForm').reset();
+      document.getElementById('tenantDashboard').classList.add('hidden');
+      document.getElementById('tenantLoginCard').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
